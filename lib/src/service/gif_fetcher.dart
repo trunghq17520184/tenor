@@ -5,6 +5,7 @@ Future<TenorResponse?> _privateRequestGif(
   EndPoint endPoint,
   String keys, {
   bool canShare = false,
+  String? tag,
   int limit = 1,
   ContentFilter? contentFilter = ContentFilter.high,
   GifSize? size = GifSize.all,
@@ -17,6 +18,9 @@ Future<TenorResponse?> _privateRequestGif(
 
   if (contentFilter != null) {
     path += '&contentfilter=' + contentFilter.toString().enumVal;
+  }
+  if (tag != null) {
+    path += '&tag=' + tag.toString().enumVal;
   }
   if (mediaFilter != null) {
     path += '&media_filter=' + mediaFilter.toString().enumVal;

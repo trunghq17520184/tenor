@@ -34,6 +34,7 @@ class Tenor {
     MediaFilter mediaFilter = MediaFilter.minimal,
     String anon_id = '',
     bool canRegisterShare = false,
+    String? pos,
   }) async {
     var keys = '?key=$apiKey&locale=$language';
 
@@ -50,7 +51,37 @@ class Tenor {
       canShare: canRegisterShare,
       contentFilter: contentFilter,
       mediaFilter: mediaFilter,
-      pos: null,
+      pos: pos,
+    );
+  }
+
+  Future<TenorResponse?> requestGIFbyTag({
+    int limit = 20,
+    ContentFilter contentFilter = ContentFilter.high,
+    GifSize size = GifSize.all,
+    MediaFilter mediaFilter = MediaFilter.minimal,
+    String anon_id = '',
+    String? tag,
+    bool canRegisterShare = false,
+    String? pos,
+  }) async {
+    var keys = '?key=$apiKey&locale=$language';
+
+    /// checking to canRegisterShare
+    if (canRegisterShare) {
+      assert(anon_id.trim() != '',
+          'As canRegisterShare is set to true, anon_id should not be null or empty.');
+      keys += '&anon_id=$anon_id';
+    }
+    return await _privateRequestGif(
+      EndPoint.search,
+      keys,
+      limit: limit,
+      tag: tag,
+      canShare: canRegisterShare,
+      contentFilter: contentFilter,
+      mediaFilter: mediaFilter,
+      pos: pos,
     );
   }
 
@@ -118,6 +149,7 @@ class Tenor {
     MediaFilter mediaFilter = MediaFilter.minimal,
     String anon_id = '',
     bool canRegisterShare = false,
+    String? pos,
   }) async {
     var keys = '?key=$apiKey&locale=$language&q=$search';
 
@@ -135,7 +167,7 @@ class Tenor {
       contentFilter: contentFilter,
       size: size,
       mediaFilter: mediaFilter,
-      pos: null,
+      pos: pos,
     );
   }
 
